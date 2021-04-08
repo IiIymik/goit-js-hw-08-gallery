@@ -44,6 +44,7 @@ function openGalleryImg(e) {
     openImgEl.src = e.target.dataset.source;
     openImgEl.alt = e.target.alt;
     window.addEventListener('keydown', onEscKeyPress);
+    window.addEventListener('keydown', eventArrow);
 }
 
 btnCloseEl.addEventListener('click', closedGalleryImg)
@@ -51,9 +52,16 @@ btnCloseEl.addEventListener('click', closedGalleryImg)
 function closedGalleryImg() {
     delete openImgEl.currentSrc;
     openModal.classList.remove('is-open');
-}
+};
 overlayEl.addEventListener('click', closedGalleryImg);
 
 function onEscKeyPress(e) {
-    console.log(e.key);
-}
+    if (e.key === 'Escape') {
+        closedGalleryImg();
+    }
+    
+};
+
+function eventArrow(e) {
+console.log(e)
+};
