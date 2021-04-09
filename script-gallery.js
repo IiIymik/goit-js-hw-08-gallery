@@ -8,7 +8,7 @@ const btnCloseEl = document.querySelector('[data-action="close-lightbox"]');
 // console.log(btnCloseEl);
 const openImgEl = document.querySelector('.lightbox__image');
 const overlayEl = document.querySelector('.lightbox__overlay');
-console.log(overlayEl);
+// console.log(overlayEl);
 
 const makeGalleryCard = ({ preview, original, description }) => {
     const liEL = document.createElement('li');
@@ -63,5 +63,24 @@ function onEscKeyPress(e) {
 };
 
 function eventArrow(e) {
-console.log(e)
+    // console.dir(e.code)
+    // console.log(e.target);
+    if (e.code !== 'ArrowLeft') {
+        return
+    };
+    const elntChangeing = e.target.children[0].dataset.source
+    // console.log(e.target.children[0].dataset.source)
+    boxEL.childNodes.forEach((el, index) => {
+        let currentelIndex = el;
+        if (e.target.children[0].dataset.source === el.children[0].href) {
+            console.log(el.children[0].href);
+            currentelIndex -= el;
+            // elntChangeing = 
+            console.log(currentelIndex);
+            // console.log(arr);
+            // console.log(arr.indexOf(index));
+        }
+    })
+    // console.dir(boxEL)
+
 };
