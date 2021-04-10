@@ -36,6 +36,7 @@ galleryImgEl.addEventListener('click', openGalleryImg);
 
 function openGalleryImg(e) {
     e.preventDefault();
+  
     openModal.classList.toggle('is-open');
     openImgEl.src = e.target.dataset.source;
     openImgEl.alt = e.target.alt;
@@ -59,23 +60,26 @@ function onEscKeyPress(e) {
 };
 
 function eventArrow(e) {
+    
     const elntChangeing = e.target.children[0].dataset.source
+    let currentSrc = openImgEl.src;
+    console.log(currentSrc)
     if (e.code === 'ArrowLeft') {
     galleryImgEl.childNodes.forEach((el) => {
         if (elntChangeing === el.firstChild.href) {
             const previousEl = el.previousElementSibling.firstChild.href;
-            openImgEl.src = previousEl;
-            e.repeat;
+            currentSrc = previousEl;
         }
     })
     } else if (e.code === 'ArrowRight') {
         galleryImgEl.childNodes.forEach((el) => {
         if (elntChangeing === el.firstChild.href) {
             const previousEl = el.nextElementSibling.firstChild.href;
-            openImgEl.src = previousEl;
+            currentSrc = previousEl;
         }
     })
     }
+    openImgEl.src = currentSrc;
    
 };
 
