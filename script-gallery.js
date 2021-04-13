@@ -41,7 +41,8 @@ function openGalleryImg(e) {
     openImgEl.src = e.target.dataset.source;
     openImgEl.alt = e.target.alt;
     window.addEventListener('keydown', onEscKeyPress);
-    window.addEventListener('keydown', eventArrow);
+    window.addEventListener('keydown', onKeyPressArrow);
+
 }
 
 btnCloseEl.addEventListener('click', closedGalleryImg)
@@ -49,6 +50,7 @@ btnCloseEl.addEventListener('click', closedGalleryImg)
 function closedGalleryImg() {
     delete openImgEl.currentSrc;
     openModal.classList.remove('is-open');
+        cleanModal();
 };
 overlayEl.addEventListener('click', closedGalleryImg);
 
@@ -56,30 +58,37 @@ function onEscKeyPress(e) {
     if (e.key === 'Escape') {
         closedGalleryImg();
     }
-    
 };
-
-function eventArrow(e) {
+function onKeyPressArrow(e) {
     
-    const elntChangeing = e.target.children[0].dataset.source
-    let currentSrc = openImgEl.src;
-    console.log(currentSrc)
-    if (e.code === 'ArrowLeft') {
-    galleryImgEl.childNodes.forEach((el) => {
-        if (elntChangeing === el.firstChild.href) {
-            const previousEl = el.previousElementSibling.firstChild.href;
-            currentSrc = previousEl;
-        }
-    })
-    } else if (e.code === 'ArrowRight') {
-        galleryImgEl.childNodes.forEach((el) => {
-        if (elntChangeing === el.firstChild.href) {
-            const previousEl = el.nextElementSibling.firstChild.href;
-            currentSrc = previousEl;
-        }
-    })
+        const onSrc = arrayItems.map(({ original }) => original);
+        const onDesc = arrayItems.map(({ description }) => description);
+        
+        let currSrc = onSrc.indexOf(openImgEl.src);
+        let currDesc = onDesc.indexOf(openImgEl.alt);
+
+        switch (e.code) {
+        case 'ArrowLeft':
+            if (currSrc === 0 && currDesc === 0) {
+            currSrc = onSrc.length;
+            currDesc = onDesc.length;
+    };
+        openImgEl.src = onSrc[currSrc - 1];
+        openImgEl.alt = onDesc[currDesc - 1];
+            break;
+        
+        case 'ArrowRight':
+            if (currSrc + 1 > onSrc.length -1 && currDesc + 1 > onDesc.length -1 ) {
+            currSrc = -1;
+            currDesc = -1;
+            };
+            openImgEl.src = onSrc[currSrc + 1];
+            openImgEl.alt = onDesc[currDesc + 1];
+            break;
     }
-    openImgEl.src = currentSrc;
-   
 };
 
+function cleanModal(e) {
+    openImgEl.src = " ";
+    openImgEl.alt = " ";
+ };
